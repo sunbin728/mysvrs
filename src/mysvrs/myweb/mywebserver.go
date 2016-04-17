@@ -17,6 +17,7 @@ var visitcount int64
 func Start(httpaddr string, httpsaddr string) {
 	http.HandleFunc("/mysvrs", mysvrshandler)
 	http.HandleFunc("/ver", verhandler)
+	http.HandleFunc("/now", nowhandler)
 
 	err := http.ListenAndServe(httpaddr, nil)
 	if err != nil {
@@ -32,6 +33,10 @@ func verhandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, wel)
 	fmt.Fprintln(w, util.GetVersion())
 	fmt.Fprintln(w, startTime)
+}
+
+func nowhandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, time.Now().Format("2006-01-02 15:04:05"))
 }
 
 func refreshVisitCount() {
